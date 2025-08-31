@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limbus Company MD6 Achievement Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Limbus Company MD6 Tracker</h1>
+            <p>Check off your completed achievements to track your pass progress.</p>
+        </header>
+
+        <div class="summary-card">
+            <h2>Your Progress</h2>
+            <div class="progress-stats">
+                <div>
+                    <span class="label">Total Points</span>
+                    <span id="total-points" class="value">0</span>
+                </div>
+                <div>
+                    <span class="label">Pass Level</span>
+                    <span id="pass-level" class="value">0</span>
+                </div>
+            </div>
+            <div class="progress-bar-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <span id="progress-text" class="progress-text">0 / 100 to next level</span>
+        </div>
+
+        <main id="achievement-list">
+            </main>
+
+        <footer>
+            <button id="reset-button">Reset All Progress</button>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
