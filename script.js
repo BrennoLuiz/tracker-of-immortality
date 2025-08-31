@@ -1,31 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // =================================================================
+    //  ✅ ACHIEVEMENT LIST - (UNCHANGED, but pasting for completeness)
+    // =================================================================
     const achievementsData = [
         {
-            category: "Collection", 
+            category: "Collection",
             achievements: [
-                { id: 'clear_10_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ E.G.O Gifts', points: 10 },
-                { id: 'clear_20_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 20+ E.G.O Gifts', points: 30 },
-                { id: 'clear_25_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 25+ E.G.O Gifts', points: 40 },
-                { id: 'clear_30_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 30+ E.G.O Gifts', points: 50 },
-                { id: 'clear_15_burn_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Burn E.G.O Gifts', points: 20 },
-                { id: 'clear_15_bleed_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Bleed E.G.O Gifts', points: 20 },
-                { id: 'clear_15_tremor_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Tremor E.G.O Gifts', points: 20 },
-                { id: 'clear_15_rupture_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Rupture E.G.O Gifts', points: 20 },
-                { id: 'clear_15_sinking_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Sinking E.G.O Gifts', points: 20 },
-                { id: 'clear_15_poise_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Poise E.G.O Gifts', points: 20 },
-                { id: 'clear_15_charge_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Charge E.G.O Gifts', points: 20 },
-                { id: 'clear_10_slash_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Slash E.G.O Gifts', points: 10 },
-                { id: 'clear_10_pierce_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Pierce E.G.O Gifts', points: 10 },
-                { id: 'clear_10_blunt_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Blunt E.G.O Gifts', points: 10 },
-                { id: 'clear_5_tier4_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 5+ Tier 4 or higher E.G.O Gifts', points: 30 },
-                { id: 'clear_10_tier4_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Tier 4 or higher E.G.O Gifts', points: 40 },
-                { id: 'clear_20_tier4_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 20+ Tier 4 or higher E.G.O Gifts', points: 80 },
-                { id: 'clear_2_fusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 2+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 10 },
-                { id: 'clear_5_fusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 5+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 30 },
-                { id: 'clear_10_fusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 50 },
-                { id: 'clear_8_themefusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 8+ Theme Pack exclusive Fusion E.G.O Gifts', points: 50 },
-                { id: 'clear_1_tier5_gift', name: 'Clear Mirror Dungeon at Floor 5 or higher with 1+ Tier 5 or EX E.G.O Gifts', points: 100 },
+                { id: 'collect_10_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ E.G.O Gifts', points: 10 },
+                { id: 'collect_20_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 20+ E.G.O Gifts', points: 30 },
+                { id: 'collect_25_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 25+ E.G.O Gifts', points: 40 },
+                { id: 'collect_30_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 30+ E.G.O Gifts', points: 50 },
+                { id: 'collect_15_burn_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Burn E.G.O Gifts', points: 20 },
+                { id: 'collect_15_bleed_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Bleed E.G.O Gifts', points: 20 },
+                { id: 'collect_15_tremor_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Tremor E.G.O Gifts', points: 20 },
+                { id: 'collect_15_rupture_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Rupture E.G.O Gifts', points: 20 },
+                { id: 'collect_15_sinking_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Sinking E.G.O Gifts', points: 20 },
+                { id: 'collect_15_poise_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Poise E.G.O Gifts', points: 20 },
+                { id: 'collect_15_charge_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 15+ Charge E.G.O Gifts', points: 20 },
+                { id: 'collect_10_slash_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Slash E.G.O Gifts', points: 10 },
+                { id: 'collect_10_pierce_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Pierce E.G.O Gifts', points: 10 },
+                { id: 'collect_10_blunt_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Blunt E.G.O Gifts', points: 10 },
+                { id: 'collect_5_tier4_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 5+ Tier 4 or higher E.G.O Gifts', points: 30 },
+                { id: 'collect_10_tier4_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Tier 4 or higher E.G.O Gifts', points: 40 },
+                { id: 'collect_20_tier4_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 20+ Tier 4 or higher E.G.O Gifts', points: 80 },
+                { id: 'collect_2_fusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 2+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 10 },
+                { id: 'collect_5_fusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 5+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 30 },
+                { id: 'collect_10_fusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 10+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 50 },
+                { id: 'collect_8_themefusion_gifts', name: 'Clear Mirror Dungeon at Floor 5 or higher with 8+ Theme Pack exclusive Fusion E.G.O Gifts', points: 50 },
+                { id: 'collect_1_tier5_gift', name: 'Clear Mirror Dungeon at Floor 5 or higher with 1+ Tier 5 or EX E.G.O Gifts', points: 100 },
                 { id: 'unlock_40_normal_packs', name: 'Unlock 40 or more Normal Difficulty Theme Packs', points: 50 },
                 { id: 'unlock_70_hard_packs', name: 'Unlock 70 or more Hard Difficulty Theme Packs', points: 50 },
                 { id: 'unlock_20_burn', name: 'Unlock 20 Burn E.G.O Gifts in the E.G.O Gift Compendium', points: 20 },
@@ -38,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 'unlock_300_gifts', name: 'Unlock 300 E.G.O Gifts in the E.G.O Gift Compendium', points: 50 }
             ]
         },
-    {
+        {
             category: "Clears",
             achievements: [
                 { id: 'clear_f5_5_times', name: 'Clear Mirror Dungeon at Floor 5 or higher 5 time(s)', points: 10 },
@@ -149,9 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const progressBarEl = document.getElementById('progress-bar');
     const progressTextEl = document.getElementById('progress-text');
     const resetButton = document.getElementById('reset-button');
+    const tabButtons = document.querySelectorAll('.tab-navigation .tab-button');
     const PASS_LEVEL_POINTS = 100;
     
     let completedAchievements = {};
+    let currentCategory = "Collection"; // Default category
 
     function loadProgress() {
         const savedProgress = localStorage.getItem('md6_achievements');
@@ -164,46 +169,60 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('md6_achievements', JSON.stringify(completedAchievements));
     }
 
-    function renderAchievements() {
+    function renderAchievements(categoryToRender) {
         achievementListContainer.innerHTML = ''; // Clear existing list
-        achievementsData.forEach(categoryData => {
-            const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'achievement-category';
+        const categoryData = achievementsData.find(cat => cat.category === categoryToRender);
 
-            const categoryTitle = document.createElement('h2');
-            categoryTitle.textContent = categoryData.category;
-            categoryDiv.appendChild(categoryTitle);
+        if (!categoryData) {
+            achievementListContainer.innerHTML = '<p>Category not found.</p>';
+            return;
+        }
 
-            categoryData.achievements.forEach(ach => {
-                const isCompleted = completedAchievements[ach.id] || false;
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'achievement-category';
 
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'achievement-item';
-                if (isCompleted) {
-                    itemDiv.classList.add('completed');
-                }
-                itemDiv.dataset.id = ach.id;
+        const categoryTitle = document.createElement('h2');
+        categoryTitle.textContent = categoryData.category;
+        categoryDiv.appendChild(categoryTitle);
 
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = ach.id;
-                checkbox.checked = isCompleted;
+        categoryData.achievements.forEach(ach => {
+            const isCompleted = completedAchievements[ach.id] || false;
 
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'achievement-name';
-                nameSpan.textContent = ach.name;
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'achievement-item';
+            if (isCompleted) {
+                itemDiv.classList.add('completed');
+            }
+            itemDiv.dataset.id = ach.id;
 
-                const pointsSpan = document.createElement('span');
-                pointsSpan.className = 'achievement-points';
-                pointsSpan.textContent = `${ach.points} pts`;
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = ach.id;
+            checkbox.checked = isCompleted;
 
-                itemDiv.appendChild(checkbox);
-                itemDiv.appendChild(nameSpan);
-                itemDiv.appendChild(pointsSpan);
-                categoryDiv.appendChild(itemDiv);
-            });
-            achievementListContainer.appendChild(categoryDiv);
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'achievement-name';
+            nameSpan.textContent = ach.name;
+
+            const pointsSpan = document.createElement('span');
+            pointsSpan.className = 'achievement-points';
+            pointsSpan.textContent = `${ach.points}`; // Points value only, badge is CSS background
+
+            itemDiv.appendChild(checkbox);
+            itemDiv.appendChild(nameSpan);
+            itemDiv.appendChild(pointsSpan);
+
+            // Add the "Completed" stamp if achieved
+            if (isCompleted) {
+                const completedStamp = document.createElement('div');
+                completedStamp.className = 'completed-stamp';
+                // completedStamp.textContent = '完了'; // Japanese for "Completed"
+                itemDiv.appendChild(completedStamp);
+            }
+
+            categoryDiv.appendChild(itemDiv);
         });
+        achievementListContainer.appendChild(categoryDiv);
     }
 
     function updateSummary() {
@@ -226,29 +245,52 @@ document.addEventListener('DOMContentLoaded', () => {
         progressTextEl.textContent = `${pointsToNextLevel} / ${PASS_LEVEL_POINTS} to next level`;
     }
 
+    // Event listener for achievement checkboxes
     achievementListContainer.addEventListener('change', (e) => {
         if (e.target.type === 'checkbox') {
             const achievementId = e.target.id;
             completedAchievements[achievementId] = e.target.checked;
             
-            e.target.closest('.achievement-item').classList.toggle('completed', e.target.checked);
+            const itemDiv = e.target.closest('.achievement-item');
+            itemDiv.classList.toggle('completed', e.target.checked);
+
+            // Dynamically add/remove the completed stamp
+            let completedStamp = itemDiv.querySelector('.completed-stamp');
+            if (e.target.checked && !completedStamp) {
+                completedStamp = document.createElement('div');
+                completedStamp.className = 'completed-stamp';
+                // completedStamp.textContent = '完了';
+                itemDiv.appendChild(completedStamp);
+            } else if (!e.target.checked && completedStamp) {
+                completedStamp.remove();
+            }
             
             saveProgress();
             updateSummary();
         }
+    });
+
+    // Event listener for tab navigation
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            currentCategory = button.dataset.category;
+            renderAchievements(currentCategory);
+        });
     });
 
     resetButton.addEventListener('click', () => {
         if (confirm('Are you sure you want to reset all your progress? This cannot be undone.')) {
             completedAchievements = {};
             saveProgress();
-            renderAchievements();
+            renderAchievements(currentCategory); // Re-render current category
             updateSummary();
         }
     });
 
     // Initial setup
     loadProgress();
-    renderAchievements();
+    renderAchievements(currentCategory);
     updateSummary();
 });
