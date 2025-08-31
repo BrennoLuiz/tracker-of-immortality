@@ -3,43 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Limbus Company MD6 Achievement Tracker</title>
+    <title>Tracker of Immortality</title></title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Tracker of Immortality</h1>
-            <p>Hello Kinetic.</p>
-        </header>
+    <div class="main-background">
+        <div class="container">
+            <header>
+                <div class="top-banner">
+                    <div class="header-text">
+                        <h1>Tracker of Immortality</h1>
+                        <p>God help me.</p>
+                    </div>
+                </div>
+            </header>
 
-        <div class="summary-card">
-            <h2>Your Progress</h2>
-            <div class="progress-stats">
-                <div>
-                    <span class="label">Total Points</span>
-                    <span id="total-points" class="value">0</span>
+            <div class="ui-frame">
+                <div class="tab-navigation">
+                    <button class="tab-button active" data-category="Collection">Collection</button>
+                    <button class="tab-button" data-category="Clears">Clears</button>
+                    <button class="tab-button" data-category="Loadout">Loadout</button>
+                    <button class="tab-button" data-category="Shop">Shop</button>
+                    <button class="tab-button" data-category="Combat">Combat</button>
                 </div>
-                <div>
-                    <span class="label">Pass Level</span>
-                    <span id="pass-level" class="value">0</span>
+
+                <div class="content-area">
+                    <div class="summary-card">
+                        <h2>Your Progress</h2>
+                        <div class="progress-stats">
+                            <div>
+                                <span class="label">Total Points</span>
+                                <span id="total-points" class="value">0</span>
+                            </div>
+                            <div>
+                                <span class="label">Pass Level</span>
+                                <span id="pass-level" class="value">0</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar-wrapper">
+                            <div class="progress-bar-container-bg">
+                                <div id="progress-bar" class="progress-bar"></div>
+                            </div>
+                        </div>
+                        <span id="progress-text" class="progress-text">0 / 100 to next level</span>
+                    </div>
+
+                    <main id="achievement-list">
+                        </main>
                 </div>
             </div>
-            <div class="progress-bar-container">
-                <div id="progress-bar" class="progress-bar"></div>
-            </div>
-            <span id="progress-text" class="progress-text">0 / 100 to next level</span>
+
+            <footer>
+                <button id="reset-button" class="reset-button">Reset All Progress</button>
+            </footer>
+
+            <div class="decor-bottom-left"></div>
+            <div class="decor-bottom-right"></div>
         </div>
-
-        <main id="achievement-list">
-            </main>
-
-        <footer>
-            <button id="reset-button">Reset All Progress</button>
-        </footer>
     </div>
 
     <script src="script.js"></script>
