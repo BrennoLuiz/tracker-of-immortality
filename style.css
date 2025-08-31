@@ -6,10 +6,11 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('assets/main_bg_pattern.jpg');
+    background-image: url('assets/main_bg_pattern.png'); /* <-- FIX: Main background pattern */
     background-size: cover;
     background-position: center;
     color: #e0e0e0;
+    overflow-y: auto; /* Ensure body can scroll if content is too tall */
 }
 
 .main-container {
@@ -22,7 +23,7 @@ body {
 }
 
 .ui-frame {
-    background-image: url('assets/large_card_bg.jpg');
+    background-image: url('assets/large_card_bg.jpg'); /* This asset seems to be the main green textured background */
     background-size: 100% 100%;
     background-repeat: no-repeat;
     padding: 30px 40px;
@@ -31,6 +32,8 @@ body {
     display: flex;
     gap: 25px; /* Space between sidebar and content */
     min-height: 700px;
+    position: relative; /* For absolute positioning of elements inside */
+    background-color: #2b4f4c; /* Fallback color matching the asset */
 }
 
 /* Sidebar Navigation */
@@ -42,7 +45,7 @@ body {
 }
 
 .tab-button {
-    background-image: url('assets/tab_default.png');
+    background-image: url('assets/tab_default.png'); /* Your teal button asset */
     background-color: transparent;
     background-size: 100% 100%;
     border: none;
@@ -55,6 +58,8 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    text-align: center; /* Center the text */
+    line-height: 60px; /* Vertically center text */
 }
 
 .tab-button:hover {
@@ -62,10 +67,10 @@ body {
     filter: brightness(1.1);
 }
 
-/* NOTE: You did not provide a unique "active" tab asset, so I am simulating it with CSS */
 .tab-button.active {
-    color: white;
-    filter: brightness(1.2) drop-shadow(0 0 5px #00e6e6);
+    /* Using the same image but applying a glow/brightness to simulate active state */
+    filter: brightness(1.3) drop-shadow(0 0 8px #00e6e6); /* Brighter and subtle glow */
+    color: #fff;
 }
 
 /* Main Content Area */
@@ -86,150 +91,50 @@ body {
     background-color: rgba(0,0,0,0.3);
     padding: 5px 20px;
     border-radius: 5px;
+    /* Adjust based on your screenshot's "Collection" title bar */
+    background-image: url('assets/Image3.png'); /* The long banner asset, could be used for the title card background */
+    background-size: cover; /* or 100% 100% if it's meant to stretch */
+    background-repeat: no-repeat;
+    height: 40px; /* Adjust height to match asset */
+    display: flex;
+    align-items: center;
 }
 
 #category-title {
     margin: 0;
-    color: #fff;
-    font-size: 2em;
+    color: #fff; /* White text for contrast on the banner */
+    font-size: 1.8em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
 
 .summary-card {
-    background-color: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    padding: 10px;
-    width: 250px;
+    background-image: url('assets/small_card_bg.jpg'); /* The smaller dark card for progress */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding: 15px;
+    width: 200px; /* Adjusted width for summary card */
     flex-shrink: 0;
     position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 120px; /* Fixed height to match reference */
+    padding-top: 30px; /* Room for "Progress" text */
 }
 
 .summary-card h2 {
-    margin: 0 0 5px;
+    margin: 0;
     font-size: 1em;
     font-weight: normal;
-    color: #aaa;
+    color: #f7e096; /* Goldish color for "Progress" */
+    position: absolute; /* Position "Progress" text */
+    top: 10px;
+    left: 15px;
 }
 
 .total-points-display {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.progress-bar-container {
-    background-color: #111;
-    border: 1px solid #444;
-    height: 15px;
-    padding: 2px;
-}
-
-.progress-bar {
-    background-color: #ffc107;
-    width: 0%;
-    height: 100%;
-    transition: width 0.3s ease-in-out;
-}
-
-.level-display {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-#pass-level {
-    font-size: 1.5em;
-    color: #ffc107;
-}
-
-/* Achievement List */
-.achievement-list-container {
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-right: 10px; /* For scrollbar spacing */
-}
-
-.achievement-item {
-    background-image: url('assets/achievement_item_bg_default.jpg');
-    background-size: 100% 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 15px;
-    margin-bottom: 10px;
-    height: 65px;
-    position: relative;
-}
-
-.achievement-item.completed {
-    background-image: url('assets/achievement_item_bg_completed.jpg');
-}
-
-/* Custom Checkbox using your assets */
-.achievement-item input[type="checkbox"] {
-    appearance: none;
-    width: 48px;
-    height: 48px;
-    margin-right: 15px;
-    cursor: pointer;
-    background-image: url('assets/checkbox_unchecked.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    flex-shrink: 0;
-}
-
-.achievement-item input[type="checkbox"]:checked {
-    background-image: url('assets/checkbox_checked.png');
-}
-
-.achievement-name {
-    flex-grow: 1;
-    font-size: 0.95em;
-}
-
-.achievement-points {
-    background-image: url('assets/earned_badge.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #333;
     font-size: 1.1em;
-    flex-shrink: 0;
-}
-
-.completed-stamp {
-    position: absolute;
-    right: 80px; /* Position it left of the points badge */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100px;
-    height: 50px;
-    background-image: url('assets/completed_stamp.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.reset-button {
-    background-color: #c62828;
-    color: white;
-    border: 1px solid #811a1a;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 1em;
-    font-weight: 700;
-}
-
-.reset-button:hover {
-    background-color: #e53935;
-}
+    font-weight: bold;
+    text-align: right; /* Align right to match reference */
+    margin-bottom:
