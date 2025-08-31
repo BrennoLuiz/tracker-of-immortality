@@ -1,263 +1,235 @@
-:root {
-    --text-color: #e0e0e0;
-    --primary-color: #ffc107; /* Not heavily used directly, but good for defaults */
-    --secondary-text-color: #b0bec5;
-    --completed-stamp-color: #f7e096; /* Color for the "完了" stamp text */
-}
-
 body {
     font-family: 'Roboto Condensed', sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 20px;
     display: flex;
     justify-content: center;
+    align-items: center;
     min-height: 100vh;
-    background-color: #1a1a1a; /* Fallback */
-    color: var(--text-color);
-    overflow-y: scroll; /* Allow scrolling if content overflows */
-}
-
-.main-background {
-    width: 100%;
-    min-height: 100vh;
-    background-image: url('assets/Image10.png'); /* The nebula background */
+    background-image: url('assets/main_bg_pattern.jpg');
     background-size: cover;
     background-position: center;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative; /* For absolutely positioned decorations */
+    color: #e0e0e0;
 }
 
-.container {
-    max-width: 1200px; /* Increased max-width to accommodate wider UI */
+.main-container {
     width: 100%;
-    position: relative;
-    z-index: 1; /* Ensure container is above some decorations */
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-header {
-    width: 100%;
-    margin-bottom: 20px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-}
-
-.top-banner {
-    background-image: url('assets/Image3.png'); /* The top banner asset */
-    background-size: 100% 100%; /* Stretch to fit */
-    background-repeat: no-repeat;
-    height: 80px; /* Adjust height based on asset aspect ratio */
-    width: 100%; /* Will be constrained by parent */
-    max-width: 800px; /* Match content area width */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 40px; /* Padding for text inside banner */
-    box-sizing: border-box;
-}
-
-.header-text {
-    text-align: center;
-    color: #f0f0f0; /* Lighter text for banner */
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-
-h1 {
-    color: #f7e096; /* Goldish color */
-    margin: 0;
-    font-size: 2.2em;
-    letter-spacing: 1px;
-}
-
-header p {
-    margin: 5px 0 0;
-    font-size: 0.9em;
-    color: var(--secondary-text-color);
-}
-
-
-/* UI Frame containing tabs and content */
-.ui-frame {
-    background-image: url('assets/Image9.png'); /* The main large background frame */
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    padding: 100px 30px 30px 30px; /* Adjust padding to fit content inside the frame */
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 850px; /* This width should match the reference frame */
-    min-height: 600px; /* Minimum height for the frame */
-    position: relative;
-    margin-top: -60px; /* Overlap with header banner */
-}
-
-.tab-navigation {
-    position: absolute;
-    top: 5px; /* Position relative to .ui-frame */
-    left: 20px; /* Align with content edge */
-    display: flex;
-    flex-direction: column; /* Tabs stacked vertically */
-    gap: 5px; /* Space between tabs */
-    z-index: 10;
-}
-
-.tab-button {
-    background-image: url('assets/Image1.png'); /* Default tab image */
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    border: none;
-    color: var(--text-color);
-    padding: 10px 15px;
-    height: 40px; /* Consistent height for tabs */
-    width: 150px; /* Consistent width for tabs */
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 1.1em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-align: left;
-    padding-left: 30px; /* Push text right to fit asset */
-    box-sizing: border-box;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-}
-
-.tab-button:hover {
-    filter: brightness(1.1);
-}
-
-.tab-button.active {
-    background-image: url('assets/Image1.png'); /* Use the active tab image if you have one, or just brightness */
-    color: #f7e096; /* Lighter text for active tab */
-    filter: brightness(1.2);
-}
-
-.content-area {
-    margin-left: 170px; /* Space for the vertical tabs */
-    padding-top: 10px; /* Small offset from top of content area */
-    display: flex;
-    flex-direction: column;
     gap: 20px;
 }
 
-/* Summary Card (Progress Box) */
-.summary-card {
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.6)); /* Darker, semi-transparent background */
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.1);
-    position: relative;
-    max-width: 300px; /* Sizing from reference */
-    float: right; /* Position to the right of achievements */
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
-
-.summary-card h2 {
-    color: #f7e096;
-    font-size: 1.3em;
-    margin-top: 0;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.progress-stats {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.progress-stats .label {
-    display: block;
-    font-size: 0.8em;
-    color: var(--secondary-text-color);
-}
-
-.progress-stats .value {
-    font-size: 2em;
-    font-weight: 700;
-    color: var(--text-color);
-}
-
-.progress-bar-wrapper {
-    position: relative;
-    height: 20px; /* Height of the progress bar asset */
-    margin-bottom: 8px;
-}
-
-.progress-bar-container-bg {
-    background-image: url('assets/progress_bar_container_empty.png');
+.ui-frame {
+    background-image: url('assets/large_card_bg.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 100%;
+    padding: 30px 40px;
+    box-sizing: border-box;
     width: 100%;
-    position: absolute;
+    display: flex;
+    gap: 25px; /* Space between sidebar and content */
+    min-height: 700px;
 }
 
-.progress-bar {
-    background-image: url('assets/progress_bar_fill.png'); /* Fill texture */
-    background-size: auto 100%; /* Keep height fixed, let width scale */
-    background-repeat: repeat-x; /* Repeat the texture horizontally */
-    height: 100%;
-    width: 0%;
-    transition: width 0.3s ease-in-out;
-    border-radius: 5px; /* Slight rounded corners for the fill */
+/* Sidebar Navigation */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
-.progress-text {
-    display: block;
-    text-align: center;
-    font-size: 0.8em;
-    color: var(--secondary-text-color);
-}
-
-
-/* Achievement List */
-#achievement-list {
-    flex-grow: 1; /* Take remaining space */
-}
-
-.achievement-category {
-    margin-bottom: 20px;
-}
-
-.achievement-category h2 {
-    color: #f7e096;
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+.tab-button {
+    background-image: url('assets/tab_default.png');
+    background-color: transparent;
+    background-size: 100% 100%;
+    border: none;
+    width: 180px;
+    height: 60px;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: inherit;
+    font-size: 1.2em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
+.tab-button:hover {
+    color: rgba(255, 255, 255, 1);
+    filter: brightness(1.1);
+}
+
+/* NOTE: You did not provide a unique "active" tab asset, so I am simulating it with CSS */
+.tab-button.active {
+    color: white;
+    filter: brightness(1.2) drop-shadow(0 0 5px #00e6e6);
+}
+
+/* Main Content Area */
+.content-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.title-card {
+    background-color: rgba(0,0,0,0.3);
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+#category-title {
+    margin: 0;
+    color: #fff;
+    font-size: 2em;
+}
+
+.summary-card {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 10px;
+    width: 250px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.summary-card h2 {
+    margin: 0 0 5px;
+    font-size: 1em;
+    font-weight: normal;
+    color: #aaa;
+}
+
+.total-points-display {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.progress-bar-container {
+    background-color: #111;
+    border: 1px solid #444;
+    height: 15px;
+    padding: 2px;
+}
+
+.progress-bar {
+    background-color: #ffc107;
+    width: 0%;
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+.level-display {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+#pass-level {
+    font-size: 1.5em;
+    color: #ffc107;
+}
+
+/* Achievement List */
+.achievement-list-container {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 10px; /* For scrollbar spacing */
+}
+
 .achievement-item {
-    background-image: url('assets/achievement_item_bg_default.png'); /* Default item background */
+    background-image: url('assets/achievement_item_bg_default.jpg');
     background-size: 100% 100%;
-    background-repeat: no-repeat;
     display: flex;
     align-items: center;
-    padding: 10px 15px;
+    padding: 0 15px;
     margin-bottom: 10px;
-    height: 60px; /* Fixed height to match asset */
-    box-sizing: border-box;
+    height: 65px;
     position: relative;
-    transition: filter 0.2s;
 }
 
 .achievement-item.completed {
-    background-image: url('assets/achievement_item_bg_completed.png'); /* Completed item background */
-    filter: saturate(0.5); /* Desaturate completed items */
+    background-image: url('assets/achievement_item_bg_completed.jpg');
 }
 
+/* Custom Checkbox using your assets */
 .achievement-item input[type="checkbox"] {
-    appearance: none; /* Hide default checkbox */
-    width: 30px; /* Size based on assets */
-    height: 30px;
-    margin-right:
+    appearance: none;
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
+    cursor: pointer;
+    background-image: url('assets/checkbox_unchecked.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.achievement-item input[type="checkbox"]:checked {
+    background-image: url('assets/checkbox_checked.png');
+}
+
+.achievement-name {
+    flex-grow: 1;
+    font-size: 0.95em;
+}
+
+.achievement-points {
+    background-image: url('assets/earned_badge.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1em;
+    flex-shrink: 0;
+}
+
+.completed-stamp {
+    position: absolute;
+    right: 80px; /* Position it left of the points badge */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100px;
+    height: 50px;
+    background-image: url('assets/completed_stamp.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.reset-button {
+    background-color: #c62828;
+    color: white;
+    border: 1px solid #811a1a;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+.reset-button:hover {
+    background-color: #e53935;
+}
