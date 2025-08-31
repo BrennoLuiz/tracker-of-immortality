@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // =================================================================
-    //  ✅ ACHIEVEMENT LIST - (UNCHANGED, but pasting for completeness)
-    // =================================================================
     const achievementsData = [
         {
             category: "Collection",
@@ -141,156 +138,142 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         }
     ];
-    // =================================================================
-    //  END OF ACHIEVEMENT LIST
-    // =================================================================
-
 
     const achievementListContainer = document.getElementById('achievement-list');
     const totalPointsEl = document.getElementById('total-points');
     const passLevelEl = document.getElementById('pass-level');
     const progressBarEl = document.getElementById('progress-bar');
-    const progressTextEl = document.getElementById('progress-text');
     const resetButton = document.getElementById('reset-button');
-    const tabButtons = document.querySelectorAll('.tab-navigation .tab-button');
+    const tabButtons = document.querySelectorAll('.sidebar .tab-button');
+    const categoryTitleEl = document.getElementById('category-title');
     const PASS_LEVEL_POINTS = 100;
     
     let completedAchievements = {};
     let currentCategory = "Collection"; // Default category
 
+    // Calculate total possible points once
+    const totalPossiblePoints = achievementsData.reduce((total, category) => {
+        return total + category.achievements.reduce((catTotal, ach) => catTotal + ach.points, 0);
+    }, 0);
+
     function loadProgress() {
-        const savedProgress = localStorage.getItem('md6_achievements');
+        const savedProgress = localStorage.getItem('md6_achievements_v2'); // Use a new key to avoid conflicts
         if (savedProgress) {
             completedAchievements = JSON.parse(savedProgress);
         }
     }
 
     function saveProgress() {
-        localStorage.setItem('md6_achievements', JSON.stringify(completedAchievements));
+        localStorage.setItem('md6_achievements_v2', JSON.stringify(completedAchievements));
     }
 
-    function renderAchievements(categoryToRender) {
-        achievementListContainer.innerHTML = ''; // Clear existing list
-        const categoryData = achievementsData.find(cat => cat.category === categoryToRender);
+    function renderAchievements(categoryName) {
+        achievementListContainer.innerHTML = ''; // Clear previous list
+        const categoryData = achievementsData.find(cat => cat.category === categoryName);
+        
+        categoryTitleEl.textContent = categoryName;
 
-        if (!categoryData) {
-            achievementListContainer.innerHTML = '<p>Category not found.</p>';
-            return;
-        }
-
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'achievement-category';
-
-        const categoryTitle = document.createElement('h2');
-        categoryTitle.textContent = categoryData.category;
-        categoryDiv.appendChild(categoryTitle);
+        if (!categoryData) return;
 
         categoryData.achievements.forEach(ach => {
             const isCompleted = completedAchievements[ach.id] || false;
-
             const itemDiv = document.createElement('div');
             itemDiv.className = 'achievement-item';
             if (isCompleted) {
                 itemDiv.classList.add('completed');
             }
-            itemDiv.dataset.id = ach.id;
 
+            // Checkbox
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.id = ach.id;
             checkbox.checked = isCompleted;
-
+            
+            // Name
             const nameSpan = document.createElement('span');
             nameSpan.className = 'achievement-name';
             nameSpan.textContent = ach.name;
-
+            
+            // Points Badge
             const pointsSpan = document.createElement('span');
             pointsSpan.className = 'achievement-points';
-            pointsSpan.textContent = `${ach.points}`; // Points value only, badge is CSS background
-
+            pointsSpan.textContent = ach.points;
+            
             itemDiv.appendChild(checkbox);
             itemDiv.appendChild(nameSpan);
-            itemDiv.appendChild(pointsSpan);
 
-            // Add the "Completed" stamp if achieved
+            // Add completed stamp if necessary
             if (isCompleted) {
-                const completedStamp = document.createElement('div');
-                completedStamp.className = 'completed-stamp';
-                // completedStamp.textContent = '完了'; // Japanese for "Completed"
-                itemDiv.appendChild(completedStamp);
+                const stamp = document.createElement('div');
+                stamp.className = 'completed-stamp';
+                itemDiv.appendChild(stamp);
             }
-
-            categoryDiv.appendChild(itemDiv);
+            
+            itemDiv.appendChild(pointsSpan);
+            achievementListContainer.appendChild(itemDiv);
         });
-        achievementListContainer.appendChild(categoryDiv);
     }
 
     function updateSummary() {
-        let totalPoints = 0;
-        achievementsData.forEach(cat => {
-            cat.achievements.forEach(ach => {
-                if (completedAchievements[ach.id]) {
-                    totalPoints += ach.points;
+        let currentPoints = 0;
+        Object.keys(completedAchievements).forEach(id => {
+            if(completedAchievements[id]) {
+                // Find the achievement points from the main data array
+                for (const category of achievementsData) {
+                    const ach = category.achievements.find(a => a.id === id);
+                    if (ach) {
+                        currentPoints += ach.points;
+                        break;
+                    }
                 }
-            });
+            }
         });
-
-        const passLevel = Math.floor(totalPoints / PASS_LEVEL_POINTS);
-        const pointsToNextLevel = totalPoints % PASS_LEVEL_POINTS;
-        const progressPercentage = (pointsToNextLevel / PASS_LEVEL_POINTS) * 100;
-
-        totalPointsEl.textContent = totalPoints;
+        
+        const passLevel = Math.floor(currentPoints / PASS_LEVEL_POINTS);
+        const progressToNext = currentPoints % PASS_LEVEL_POINTS;
+        
+        totalPointsEl.textContent = `${currentPoints} / ${totalPossiblePoints}`;
         passLevelEl.textContent = passLevel;
-        progressBarEl.style.width = `${progressPercentage}%`;
-        progressTextEl.textContent = `${pointsToNextLevel} / ${PASS_LEVEL_POINTS} to next level`;
+        progressBarEl.style.width = `${progressToNext}%`;
     }
 
-    // Event listener for achievement checkboxes
-    achievementListContainer.addEventListener('change', (e) => {
-        if (e.target.type === 'checkbox') {
-            const achievementId = e.target.id;
-            completedAchievements[achievementId] = e.target.checked;
-            
-            const itemDiv = e.target.closest('.achievement-item');
-            itemDiv.classList.toggle('completed', e.target.checked);
-
-            // Dynamically add/remove the completed stamp
-            let completedStamp = itemDiv.querySelector('.completed-stamp');
-            if (e.target.checked && !completedStamp) {
-                completedStamp = document.createElement('div');
-                completedStamp.className = 'completed-stamp';
-                // completedStamp.textContent = '完了';
-                itemDiv.appendChild(completedStamp);
-            } else if (!e.target.checked && completedStamp) {
-                completedStamp.remove();
-            }
-            
-            saveProgress();
-            updateSummary();
-        }
-    });
-
-    // Event listener for tab navigation
+    // Event listener for tab clicks
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
+            currentCategory = button.dataset.category;
+            
+            // Update active class on buttons
             tabButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-            currentCategory = button.dataset.category;
+            
+            // Re-render the achievement list for the new category
             renderAchievements(currentCategory);
         });
+    });
+
+    // Event listener for checking/unchecking achievements
+    achievementListContainer.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+            const achId = e.target.id;
+            completedAchievements[achId] = e.target.checked;
+            saveProgress();
+            updateSummary();
+            // Re-render to show/hide the completed stamp
+            renderAchievements(currentCategory); 
+        }
     });
 
     resetButton.addEventListener('click', () => {
         if (confirm('Are you sure you want to reset all your progress? This cannot be undone.')) {
             completedAchievements = {};
             saveProgress();
-            renderAchievements(currentCategory); // Re-render current category
             updateSummary();
+            renderAchievements(currentCategory);
         }
     });
 
-    // Initial setup
+    // Initial page load
     loadProgress();
-    renderAchievements(currentCategory);
     updateSummary();
+    renderAchievements(currentCategory); // Render the default category
 });
