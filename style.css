@@ -137,4 +137,198 @@ body {
     font-size: 1.1em;
     font-weight: bold;
     text-align: right; /* Align right to match reference */
-    margin-bottom:
+    margin-bottom: 5px;
+}
+
+.progress-bar-container {
+    background-color: #111; /* Fallback for container background */
+    border: 1px solid #444; /* Border if asset isn't a full container */
+    height: 15px;
+    padding: 2px;
+    position: relative; /* For the fill */
+}
+
+.progress-bar {
+    background-color: #ffc107; /* Fill color */
+    width: 0%;
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+.level-display {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    font-weight: bold;
+    font-size: 1em;
+    color: #f7e096; /* Goldish for LV */
+}
+
+#pass-level {
+    font-size: 1.4em;
+    color: #ffc107; /* Goldish for the number */
+}
+
+
+/* Achievement List */
+.achievement-list-container {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 10px; /* For scrollbar spacing */
+}
+
+.achievement-item {
+    background-image: url('assets/achievement_item_bg_default.jpg'); /* Default item background */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    padding: 0 15px; /* Adjust internal padding */
+    margin-bottom: 8px;
+    height: 65px; /* Fixed height to match asset */
+    position: relative;
+    box-sizing: border-box;
+    font-size: 0.9em; /* Smaller font for achievement name */
+}
+
+.achievement-item.completed {
+    background-image: url('assets/achievement_item_bg_completed.jpg'); /* Completed item background */
+    filter: saturate(0.7) brightness(0.8); /* Slight desaturation and darkening */
+}
+
+/* Custom Checkbox using your assets */
+.achievement-item input[type="checkbox"] {
+    appearance: none;
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
+    cursor: pointer;
+    background-image: url('assets/checkbox_unchecked.png'); /* Your checkbox assets */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+.achievement-item input[type="checkbox"]:checked {
+    background-image: url('assets/checkbox_checked.png'); /* Your checkbox assets */
+}
+
+.achievement-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    height: 100%; /* Take full height of parent */
+    padding: 5px 0; /* Vertical padding */
+}
+
+.achievement-name {
+    font-size: 0.95em;
+    line-height: 1.2; /* Adjust line height for multiline text */
+    color: #e0e0e0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* In-Achievement Progress Bar */
+.achievement-progress-bar-wrapper {
+    width: 60%; /* Occupy a portion of the available space */
+    height: 8px; /* Height of the bar */
+    background-color: rgba(0,0,0,0.3); /* Dark background for the empty part */
+    position: relative;
+    border-radius: 4px; /* Slight rounding */
+    margin-top: 3px; /* Space from text */
+    overflow: hidden; /* Hide overflow of fill */
+    background-image: url('assets/Image2.png'); /* Background texture for the empty bar */
+    background-size: cover;
+    background-position: center;
+}
+
+.achievement-progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background-image: url('assets/Image7.png'); /* Your teal textured strip for the fill */
+    background-size: auto 100%; /* Stretch height, repeat width */
+    background-repeat: repeat-x;
+    transition: width 0.3s ease-in-out;
+}
+
+.achievement-progress-text {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7em;
+    color: #eee;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+}
+
+.achievement-points {
+    background-image: url('assets/earned_badge.png'); /* Your badge asset */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 60px; /* Size of the badge */
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #333; /* Darker text for points on badge */
+    font-size: 1.1em;
+    flex-shrink: 0;
+    position: relative; /* For overlaying text */
+    margin-left: 10px; /* Space from achievement details */
+}
+
+.completed-stamp {
+    position: absolute;
+    right: 70px; /* Position it left of the points badge */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100px; /* Size of the stamp */
+    height: 50px;
+    background-image: url('assets/Image6.png'); /* Your stamp asset */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2; /* Ensure it's above other elements */
+}
+
+.reset-button {
+    background-color: #c62828;
+    color: white;
+    border: 1px solid #811a1a;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 700;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    transition: background-color 0.2s;
+}
+
+.reset-button:hover {
+    background-color: #e53935;
+}
+
+/* Scrollbar Styling (Optional, for better visual consistency) */
+.achievement-list-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.achievement-list-container::-webkit-scrollbar-track {
+    background: #333; /* Darker track */
+    border-radius: 5px;
+}
+
+.achievement-list-container::-webkit-scrollbar-thumb {
+    background: #555; /* Slightly lighter thumb */
+    border-radius: 5px;
+    border: 1px solid #444;
+}
+
+.achievement-list-container::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
