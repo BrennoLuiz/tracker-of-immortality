@@ -1,36 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =================================================================
-    //  ✅ TODO: PASTE YOUR ACHIEVEMENT LIST HERE!
-    // =================================================================
-    //  - Add or remove categories and items as needed.
-    //  - 'id' must be unique for each achievement.
-    //  - 'name' is the description that will be displayed.
-    //  - 'points' is the number of points it gives.
+    //  ✅ ACHIEVEMENT LIST - POPULATED FROM YOUR SPREADSHEET
     // =================================================================
     const achievementsData = [
         {
-            category: "Mirror Dungeon 6 Normal Clears",
+            category: "Dungeon Clears & E.G.O. Gift Count",
             achievements: [
-                { id: 'md6n_clear_1', name: 'Clear MD6 Normal 1 time', points: 25 },
-                { id: 'md6n_clear_3', name: 'Clear MD6 Normal 3 times', points: 50 },
-                { id: 'md6n_clear_5', name: 'Clear MD6 Normal 5 times', points: 75 },
-                { id: 'md6n_clear_10', name: 'Clear MD6 Normal 10 times', points: 100 },
+                { id: 'clear_10_gifts', name: 'Clear Floor 5+ with 10+ E.G.O Gifts', points: 10 },
+                { id: 'clear_20_gifts', name: 'Clear Floor 5+ with 20+ E.G.O Gifts', points: 30 },
+                { id: 'clear_25_gifts', name: 'Clear Floor 5+ with 25+ E.G.O Gifts', points: 40 },
+                { id: 'clear_30_gifts', name: 'Clear Floor 5+ with 30+ E.G.O Gifts', points: 50 },
+                { id: 'clear_5_tier4_gifts', name: 'Clear Floor 5+ with 5+ Tier 4 or higher E.G.O Gifts', points: 30 },
+                { id: 'clear_10_tier4_gifts', name: 'Clear Floor 5+ with 10+ Tier 4 or higher E.G.O Gifts', points: 40 },
+                { id: 'clear_20_tier4_gifts', name: 'Clear Floor 5+ with 20+ Tier 4 or higher E.G.O Gifts', points: 80 },
+                { id: 'clear_2_fusion_gifts', name: 'Clear Floor 5+ with 2+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 10 },
+                { id: 'clear_5_fusion_gifts', name: 'Clear Floor 5+ with 5+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 30 },
+                { id: 'clear_10_fusion_gifts', name: 'Clear Floor 5+ with 10+ Fusion Recipe-only Tier 4 E.G.O Gifts', points: 50 },
+                { id: 'clear_8_themefusion_gifts', name: 'Clear Floor 5+ with 8+ Theme Pack exclusive Fusion E.G.O Gifts', points: 50 },
+                { id: 'clear_1_tier5_gift', name: 'Clear Floor 5+ with 1+ Tier 5 or EX E.G.O Gifts', points: 100 }
             ]
         },
         {
-            category: "Mirror Dungeon 6 Hard Clears",
+            category: "E.G.O. Gift Status Effects",
             achievements: [
-                { id: 'md6h_clear_1', name: 'Clear MD6 Hard 1 time', points: 50 },
-                { id: 'md6h_clear_3', name: 'Clear MD6 Hard 3 times', points: 100 },
-                { id: 'md6h_clear_5', name: 'Clear MD6 Hard 5 times', points: 150 },
+                { id: 'clear_15_burn', name: 'Clear Floor 5+ with 15+ Burn E.G.O Gifts', points: 20 },
+                { id: 'clear_15_bleed', name: 'Clear Floor 5+ with 15+ Bleed E.G.O Gifts', points: 20 },
+                { id: 'clear_15_tremor', name: 'Clear Floor 5+ with 15+ Tremor E.G.O Gifts', points: 20 },
+                { id: 'clear_15_rupture', name: 'Clear Floor 5+ with 15+ Rupture E.G.O Gifts', points: 20 },
+                { id: 'clear_15_sinking', name: 'Clear Floor 5+ with 15+ Sinking E.G.O Gifts', points: 20 },
+                { id: 'clear_15_poise', name: 'Clear Floor 5+ with 15+ Poise E.G.O Gifts', points: 20 },
+                { id: 'clear_15_charge', name: 'Clear Floor 5+ with 15+ Charge E.G.O Gifts', points: 20 }
             ]
         },
         {
-            category: "Special Encounters",
+            category: "E.G.O. Gift Damage Types",
             achievements: [
-                { id: 'encounter_my_form_empties', name: 'Defeat My Form Empties', points: 50 },
-                { id: 'encounter_wayward_passenger', name: 'Defeat the Wayward Passenger', points: 50 },
+                { id: 'clear_10_slash', name: 'Clear Floor 5+ with 10+ Slash E.G.O Gifts', points: 10 },
+                { id: 'clear_10_pierce', name: 'Clear Floor 5+ with 10+ Pierce E.G.O Gifts', points: 10 },
+                { id: 'clear_10_blunt', name: 'Clear Floor 5+ with 10+ Blunt E.G.O Gifts', points: 10 }
+            ]
+        },
+        {
+            category: "Compendium & Theme Pack Unlocks",
+            achievements: [
+                { id: 'unlock_40_normal_packs', name: 'Unlock 40 or more Normal Difficulty Theme Packs', points: 50 },
+                { id: 'unlock_70_hard_packs', name: 'Unlock 70 or more Hard Difficulty Theme Packs', points: 50 },
+                { id: 'unlock_20_burn', name: 'Unlock 20 Burn E.G.O Gifts in the Compendium', points: 20 },
+                { id: 'unlock_20_bleed', name: 'Unlock 20 Bleed E.G.O Gifts in the Compendium', points: 20 },
+                { id: 'unlock_20_tremor', name: 'Unlock 20 Tremor E.G.O Gifts in the Compendium', points: 20 },
+                { id: 'unlock_20_rupture', name: 'Unlock 20 Rupture E.G.O Gifts in the Compendium', points: 20 },
+                { id: 'unlock_20_sinking', name: 'Unlock 20 Sinking E.G.O Gifts in the Compendium', points: 20 },
+                { id: 'unlock_20_poise', name: 'Unlock 20 Poise E.G.O Gifts in the Compendium', points: 20 },
+                { id: 'unlock_20_charge', name: 'Unlock 20 Charge E.G.O Gifts in the Compendium', points: 20 },
+                { id: 'unlock_300_gifts', name: 'Unlock 300 E.G.O Gifts in the E.G.O Gift Compendium', points: 50 }
             ]
         }
     ];
