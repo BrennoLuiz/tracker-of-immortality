@@ -6,11 +6,10 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: url('assets/main_bg_pattern.png'); /* <-- FIX: Main background pattern */
+    background-image: url('assets/main_bg_pattern.png');
     background-size: cover;
     background-position: center;
     color: #e0e0e0;
-    overflow-y: auto; /* Ensure body can scroll if content is too tall */
 }
 
 .main-container {
@@ -26,7 +25,7 @@ body {
     background-image: url('assets/large_card_bg.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    padding: 35px 45px;
+    padding: 40px 45px;
     box-sizing: border-box;
     width: 100%;
     display: flex;
@@ -34,13 +33,13 @@ body {
     min-height: 700px;
 }
 
-/* Sidebar Navigation */
+/* --- FIX: Sidebar and Title Alignment --- */
 .sidebar {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Fine-tuned the gap between tabs */
+    gap: 12px;
     flex-shrink: 0;
-    padding-top: 105px; /* Pushes the buttons down significantly to align */
+    padding-top: 60px; /* Aligns top of first tab with content */
 }
 
 .tab-button {
@@ -53,19 +52,17 @@ body {
     color: rgba(255, 255, 255, 0.8);
     font-family: inherit;
     font-size: 1.2em;
-    font-weight: bold; /* Keep it bold */
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .tab-button.active {
-    /* Using the same image but applying a glow/brightness to simulate active state */
-    filter: brightness(1.3) drop-shadow(0 0 8px #00e6e6); /* Brighter and subtle glow */
+    filter: brightness(1.3) drop-shadow(0 0 8px #00e6e6);
     color: #fff;
 }
 
-/* Main Content Area */
 .content-area {
     width: 100%;
     display: flex;
@@ -80,54 +77,48 @@ body {
 }
 
 .title-card {
-    background-color: rgba(0,0,0,0.3);
-    padding: 5px 20px;
-    border-radius: 5px;
-    /* Adjust based on your screenshot's "Collection" title bar */
-    background-image: url('assets/decor_top_banner.png'); /* The long banner asset, could be used for the title card background */
-    background-size: cover; /* or 100% 100% if it's meant to stretch */
-    background-repeat: no-repeat;
-    height: 40px; /* Adjust height to match asset */
-    display: flex;
-    align-items: center;
+    background-color: rgba(0,0,0,0.4);
+    padding: 5px 25px;
+    border-radius: 4px;
+    margin-top: 10px; /* Align with summary box */
 }
 
 #category-title {
     margin: 0;
-    color: #fff; /* White text for contrast on the banner */
+    color: #fff;
     font-size: 1.8em;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
 }
 
+
+/* --- FIX: Summary Card (Progress) Alignment --- */
 .summary-card {
     background-image: url('assets/small_card_bg.png');
     background-size: 100% 100%;
     background-color: transparent;
     border: none;
-    padding: 10px 15px;
-    width: 250px;
-    height: 100px;
+    padding: 10px;
+    width: 280px;
+    height: 80px;
     flex-shrink: 0;
     box-sizing: border-box;
     position: relative;
 }
 
-/* REPLACE this rule */
 .summary-card h2 {
     position: absolute;
-    top: 10px;
-    left: 15px;
+    top: 8px;
+    left: 12px;
     margin: 0;
     font-size: 0.9em;
     font-weight: bold;
     color: #f0e6c4;
 }
 
-/* REPLACE this rule */
 .total-points-display {
     position: absolute;
-    bottom: 30px; /* Position above the progress bar */
-    left: 15px;
+    bottom: 32px;
+    left: 12px;
     font-size: 1.1em;
     font-weight: bold;
 }
@@ -139,13 +130,13 @@ body {
     padding: 1px;
     box-sizing: border-box;
     position: absolute;
-    bottom: 10px; /* Position at the bottom of the card */
-    left: 15px;
-    right: 15px;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
 }
 
 .progress-bar {
-    background-color: #ffc107; /* Fill color */
+    background-color: #fce38a;
     width: 0%;
     height: 100%;
     transition: width 0.3s ease-in-out;
@@ -153,20 +144,19 @@ body {
 
 .level-display {
     position: absolute;
-    top: 12px;
-    right: 15px; /* Position LV text top-right */
+    top: 8px;
+    right: 15px;
     font-weight: bold;
     font-size: 1.1em;
     color: #f0e6c4;
 }
 
 #pass-level {
-    font-size: 1.4em;
-    color: #ffc107; /* Goldish for the number */
+    font-size: 1.5em;
+    color: #fce38a;
 }
 
-
-/* Achievement List */
+/* --- FIX: Achievement Item Layout --- */
 .achievement-list-container {
     overflow-y: auto;
     flex-grow: 1;
@@ -179,7 +169,7 @@ body {
     background-size: 100% 100%;
     display: flex;
     align-items: center;
-    padding: 0 20px 0 95px; /* Increased left padding for the badge */
+    padding: 0 15px;
     margin-bottom: 10px;
     height: 65px;
     position: relative;
@@ -188,80 +178,61 @@ body {
 
 .achievement-item.completed {
     background-image: url('assets/achievement_item_bg_completed.png');
-    filter: saturate(0.7) brightness(0.8); /* Slight desaturation and darkening */
-}
-
-/* Custom Checkbox using your assets */
-.achievement-item input[type="checkbox"] {
-    appearance: none;
-    position: absolute;
-    left: 20px; /* Position directly over the badge */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 60px;
-    margin: 0;
-    cursor: pointer;
-    z-index: 3; /* Make it the top-most clickable element */
 }
 
 .achievement-item input[type="checkbox"] {
     appearance: none;
-    position: absolute;
-    left: 15px; /* Position directly over the badge */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px; /* Cover the badge area */
-    height: 60px;
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
     cursor: pointer;
-    z-index: 3; /* Make it the top-most clickable element */
+    background-image: url('assets/checkbox_unchecked.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex-shrink: 0; /* Prevent resizing */
 }
 
-.achievement-item .achievement-progress-bar-fill {
-    background-color: #8c3b3b; /* Reddish fill for pending achievements */
-}
-
-.achievement-item.completed .achievement-progress-bar-fill {
-    background-color: #c5a682; /* Tan/Gold fill for completed achievements */
+.achievement-item input[type="checkbox"]:checked {
+    background-image: url('assets/checkbox_checked.png');
 }
 
 .achievement-details {
-    flex-grow: 1;
+    flex-grow: 1; /* Take up all available space */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center content vertically */
-    height: 100%; /* Take full height of parent */
-    padding: 5px 0; /* Vertical padding */
+    justify-content: center;
+    height: 100%;
+    padding: 5px 0;
+    margin-right: 15px;
 }
 
 .achievement-name {
     font-size: 0.95em;
-    line-height: 1.2; /* Adjust line height for multiline text */
+    line-height: 1.2;
     color: #e0e0e0;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* In-Achievement Progress Bar */
 .achievement-progress-bar-wrapper {
-    width: 60%; /* Occupy a portion of the available space */
-    height: 8px; /* Height of the bar */
-    background-color: rgba(0,0,0,0.3); /* Dark background for the empty part */
+    width: 100%;
+    height: 8px;
+    background-color: rgba(0,0,0,0.4);
     position: relative;
-    border-radius: 4px; /* Slight rounding */
-    margin-top: 3px; /* Space from text */
-    overflow: hidden; /* Hide overflow of fill */
-    background-image: url('assets/progress_bar_container_empty.png'); /* Background texture for the empty bar */
-    background-size: cover;
-    background-position: center;
+    border-radius: 4px;
+    margin-top: 3px;
+    overflow: hidden;
 }
 
-.achievement-progress-bar-fill {
+.achievement-item .achievement-progress-bar-fill {
     height: 100%;
     width: 0%;
-    background-image: url('assets/achievement_progress_fill.png'); /* Your teal textured strip for the fill */
-    background-size: auto 100%; /* Stretch height, repeat width */
-    background-repeat: repeat-x;
+    background-color: #8c3b3b; /* Reddish fill for pending */
     transition: width 0.3s ease-in-out;
+}
+
+.achievement-item.completed .achievement-progress-bar-fill {
+    background-color: #c5a682; /* Tan/Gold fill for completed */
 }
 
 .achievement-progress-text {
@@ -287,12 +258,7 @@ body {
     font-weight: bold;
     color: #4f3c3c;
     font-size: 1.2em;
-    text-shadow: none;
-    position: absolute;
-    left: 20px; /* Position on the far left */
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1; /* Ensure it's visible but behind the checkbox */
+    flex-shrink: 0; /* Prevent resizing */
 }
 
 .completed-stamp {
@@ -306,7 +272,7 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 2; /* Place it above the text but below the checkbox */
+    z-index: 2;
 }
 
 .reset-button {
@@ -319,32 +285,4 @@ body {
     font-family: inherit;
     font-size: 1em;
     font-weight: 700;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-    transition: background-color 0.2s;
-}
-
-.reset-button:hover {
-    background-color: #e53935;
-}
-
-/* Scrollbar Styling (Optional, for better visual consistency) */
-.achievement-list-container::-webkit-scrollbar {
-    width: 10px;
-}
-
-.achievement-list-container {
-    overflow-y: auto; /* This enables scrolling */
-    flex-grow: 1;
-    height: 550px; /* This sets a fixed height, showing ~4-5 items */
-    padding-right: 10px;
-}
-
-.achievement-list-container::-webkit-scrollbar-thumb {
-    background: #555; /* Slightly lighter thumb */
-    border-radius: 5px;
-    border: 1px solid #444;
-}
-
-.achievement-list-container::-webkit-scrollbar-thumb:hover {
-    background: #777;
 }
