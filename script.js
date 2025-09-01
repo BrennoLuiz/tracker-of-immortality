@@ -177,141 +177,81 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('md6_achievements_v3', JSON.stringify(completedAchievements));
     }
 
-    function renderAchievements(categoryName) {
-        achievementListContainer.innerHTML = ''; // Clear previous list
-        const categoryData = achievementsData.find(cat => cat.category === categoryName);
-        
-        categoryTitleEl.textContent = categoryName;
+function renderAchievements(categoryName) {
+    achievementListContainer.innerHTML = ''; // Clear previous list
+    const categoryData = achievementsData.find(cat => cat.category === categoryName);
+    
+    categoryTitleEl.textContent = categoryName;
 
-        if (!categoryData) return;
+    if (!categoryData) return;
 
-        categoryData.achievements.forEach(ach => {
-            const achProgress = completedAchievements[ach.id] || { isCompleted: false, currentProgress: ach.current };
-            const isCompleted = achProgress.isCompleted;
-            const currentProgress = achProgress.currentProgress;
-
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'achievement-item';
-            if (isCompleted) {
-                itemDiv.classList.add('completed');
-            }
-
-            // Checkbox
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.id = ach.id;
-            checkbox.checked = isCompleted;
-            
-            // Achievement Details Container (Name + In-achievement Progress Bar)
-            const detailsDiv = document.createElement('div');
-            detailsDiv.className = 'achievement-details';
-
-            // Name
-            const nameSpan = document.createElement('span');
-            nameSpan.className = 'achievement-name';
-            nameSpan.textContent = ach.name;
-            detailsDiv.appendChild(nameSpan);
-
-            // In-achievement Progress Bar (only if target > 0)
-            if (ach.target > 0) {
-                const progressBarWrapper = document.createElement('div');
-                progressBarWrapper.className = 'achievement-progress-bar-wrapper';
-
-                const progressBarFill = document.createElement('div');
-                progressBarFill.className = 'achievement-progress-bar-fill';
-                const progressPercentage = Math.min(100, (currentProgress / ach.target) * 100);
-                progressBarFill.style.width = `${progressPercentage}%`;
-                
-                const progressText = document.createElement('span');
-                progressText.className = 'achievement-progress-text';
-                progressText.textContent = `${currentProgress}/${ach.target}`;
-
-                progressBarWrapper.appendChild(progressBarFill);
-                progressBarWrapper.appendChild(progressText); // Text inside wrapper
-                detailsDiv.appendChild(progressBarWrapper);
-            }
-            
-            itemDiv.appendChild(checkbox);
-            itemDiv.appendChild(detailsDiv); // Add details container
-
-            // Add completed stamp if necessary
-            if (isCompleted) {
-                const stamp = document.createElement('div');
-                stamp.className = 'completed-stamp';
-                itemDiv.appendChild(stamp);
-            }
-            
-            // Points Badge
-            const pointsSpan = document.createElement('span');
-            pointsSpan.className = 'achievement-points';
-            pointsSpan.textContent = ach.points;
-            itemDiv.appendChild(pointsSpan);
-
-            achievementListContainer.appendChild(itemDiv);
-        });
-    }
-
-    function updateSummary() {
-        let currentPoints = 0;
-        Object.keys(completedAchievements).forEach(id => {
-            if(completedAchievements[id].isCompleted) {
-                for (const category of achievementsData) {
-                    const ach = category.achievements.find(a => a.id === id);
-                    if (ach) {
-                        currentPoints += ach.points;
-                        break;
-                    }
-                }
-            }
-        });
-        
-        const passLevel = Math.floor(currentPoints / PASS_LEVEL_POINTS);
-        const progressToNext = currentPoints % PASS_LEVEL_POINTS;
-        
-        totalPointsEl.textContent = `${currentPoints} / ${totalPossiblePoints}`;
-        passLevelEl.textContent = passLevel;
-        progressBarEl.style.width = `${progressToNext}%`;
-    }
-
-    // Event listener for tab clicks
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            currentCategory = button.dataset.category;
-            
-            // Update active class on buttons
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            
-            // Re-render the achievement list for the new category
-            renderAchievements(currentCategory);
-        });
+    // This is the new sorting logic, placed right after finding the category data
+    const sortedAchievements = [...categoryData.achievements].sort((a, b) => {
+        const aCompleted = completedAchievements[a.id]?.isCompleted || false;
+        const bCompleted = completedAchievements[b.id]?.isCompleted || false;
+        return aCompleted - bCompleted; // This pushes completed items to the end
     });
 
-    // Event listener for checking/unchecking achievements
-    achievementListContainer.addEventListener('change', (e) => {
-        if (e.target.type === 'checkbox') {
-            const achId = e.target.id;
-            if (!completedAchievements[achId]) { // If not yet initialized
-                completedAchievements[achId] = { isCompleted: false, currentProgress: 0 };
-            }
-            completedAchievements[achId].isCompleted = e.target.checked;
-            
-            // If checking, set progress to target, if unchecking, reset to 0 (or original if you prefer)
-            if (e.target.checked) {
-                const achDef = achievementsData.flatMap(cat => cat.achievements).find(a => a.id === achId);
-                if (achDef) {
-                    completedAchievements[achId].currentProgress = achDef.target;
-                }
-            } else {
-                completedAchievements[achId].currentProgress = 0; // Reset progress when unchecked
-            }
+    // The rest of the function now uses the new 'sortedAchievements' array
+    sortedAchievements.forEach(ach => {
+        const achProgress = completedAchievements[ach.id] || { isCompleted: false, currentProgress: ach.current };
+        const isCompleted = achProgress.isCompleted;
+        const currentProgress = achProgress.currentProgress;
 
-            saveProgress();
-            updateSummary();
-            // Re-render to show/hide the completed stamp AND update progress bar
-            renderAchievements(currentCategory); 
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'achievement-item';
+        if (isCompleted) {
+            itemDiv.classList.add('completed');
         }
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = ach.id;
+        checkbox.checked = isCompleted;
+        
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'achievement-details';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'achievement-name';
+        nameSpan.textContent = ach.name;
+        detailsDiv.appendChild(nameSpan);
+
+        if (ach.target > 1) {
+            const progressBarWrapper = document.createElement('div');
+            progressBarWrapper.className = 'achievement-progress-bar-wrapper';
+
+            const progressBarFill = document.createElement('div');
+            progressBarFill.className = 'achievement-progress-bar-fill';
+            const progressPercentage = Math.min(100, (currentProgress / ach.target) * 100);
+            progressBarFill.style.width = `${progressPercentage}%`;
+            
+            const progressText = document.createElement('span');
+            progressText.className = 'achievement-progress-text';
+            progressText.textContent = `${currentProgress}/${ach.target}`;
+
+            progressBarWrapper.appendChild(progressBarFill);
+            progressBarWrapper.appendChild(progressText);
+            detailsDiv.appendChild(progressBarWrapper);
+        }
+        
+        itemDiv.appendChild(checkbox);
+        itemDiv.appendChild(detailsDiv);
+
+        if (isCompleted) {
+            const stamp = document.createElement('div');
+            stamp.className = 'completed-stamp';
+            itemDiv.appendChild(stamp);
+        }
+        
+        const pointsSpan = document.createElement('span');
+        pointsSpan.className = 'achievement-points';
+        pointsSpan.textContent = ach.points;
+        itemDiv.appendChild(pointsSpan);
+
+        achievementListContainer.appendChild(itemDiv);
     });
+}
 
     // Example of how to manually update an achievement's progress (for testing/future input)
     // You would call this when a user performs an action that updates progress
