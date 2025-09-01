@@ -192,6 +192,27 @@ function renderAchievements(categoryName) {
         return aCompleted - bCompleted; // This pushes completed items to the end
     });
 
+    function calculateAndDisplaySummary() {
+    let currentPoints = 0;
+    Object.keys(completedAchievements).forEach(id => {
+        if(completedAchievements[id].isCompleted) {
+            for (const category of achievementsData) {
+                const ach = category.achievements.find(a => a.id === id);
+                if (ach) {
+                    currentPoints += ach.points;
+                    break;
+                }
+            }
+        }
+    });
+    
+    const passLevel = Math.floor(currentPoints / PASS_LEVEL_POINTS);
+    const progressToNext = currentPoints % PASS_LEVEL_POINTS;
+    
+    totalPointsEl.textContent = `${currentPoints} / ${totalPossiblePoints}`;
+    passLevelEl.textContent = passLevel;
+    progressBarEl.style.width = `${progressToNext}%`;
+}
     // The rest of the function now uses the new 'sortedAchievements' array
     sortedAchievements.forEach(ach => {
         const achProgress = completedAchievements[ach.id] || { isCompleted: false, currentProgress: ach.current };
@@ -286,13 +307,13 @@ function renderAchievements(categoryName) {
                 });
             });
             saveProgress();
-            updateSummary();
+            calculateAndDisplaySummary();
             renderAchievements(currentCategory);
         }
     });
 
     // Initial page load
     loadProgress();
-    updateSummary();
+    calculateAndDisplaySummary();
     renderAchievements(currentCategory); // Render the default category
 });
