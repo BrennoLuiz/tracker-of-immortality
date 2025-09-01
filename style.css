@@ -183,7 +183,7 @@ body {
 }
 
 .achievement-item {
-    background-image: url('assets/achievement_item_bg_default.jpg');
+    background-image: url('assets/achievement_item_bg_default.png');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     display: flex;
@@ -197,7 +197,7 @@ body {
 }
 
 .achievement-item.completed {
-    background-image: url('assets/achievement_item_bg_completed.jpg');
+    background-image: url('assets/achievement_item_bg_completed.png');
     filter: saturate(0.7) brightness(0.8); /* Slight desaturation and darkening */
 }
 
