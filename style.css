@@ -38,26 +38,9 @@ body {
 .sidebar {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px; /* Increased space between tabs */
     flex-shrink: 0;
-}
-
-.tab-button {
-    background-image: url('assets/tab_default.png'); /* Your teal button asset */
-    background-color: transparent;
-    background-size: 100% 100%;
-    border: none;
-    width: 180px;
-    height: 60px;
-    color: rgba(255, 255, 255, 0.7);
-    font-family: inherit;
-    font-size: 1.2em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    text-align: center; /* Center the text */
-    line-height: 60px; /* Vertically center text */
+    padding-top: 25px; /* Pushes the buttons down to align */
 }
 
 .tab-button {
@@ -70,7 +53,7 @@ body {
     color: rgba(255, 255, 255, 0.8);
     font-family: inherit;
     font-size: 1.2em;
-    font-weight: bold; /* <-- BOLD FONT */
+    font-weight: bold; /* Keep it bold */
     cursor: pointer;
     transition: all 0.2s ease;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
@@ -121,27 +104,31 @@ body {
     background-size: 100% 100%;
     background-color: transparent;
     border: none;
-    padding: 15px;
+    padding: 10px 15px;
     width: 250px;
+    height: 100px; /* Set a fixed height */
     flex-shrink: 0;
+    box-sizing: border-box;
     position: relative;
+    text-align: left;
 }
 
+/* REPLACE this rule */
 .summary-card h2 {
     margin: 0;
     font-size: 1em;
-    font-weight: normal;
-    color: #f7e096; /* Goldish color for "Progress" */
-    position: absolute; /* Position "Progress" text */
-    top: 10px;
-    left: 15px;
+    font-weight: bold;
+    color: #f0e6c4;
+    position: static; /* Let it flow normally */
 }
 
+/* REPLACE this rule */
 .total-points-display {
     font-size: 1.1em;
     font-weight: bold;
-    text-align: right; /* Align right to match reference */
-    margin-bottom: 5px;
+    text-align: left; /* Align to the left */
+    margin-bottom: 8px; /* Space between text and bar */
+    margin-top: 5px;
 }
 
 .progress-bar-container {
@@ -161,11 +148,11 @@ body {
 
 .level-display {
     position: absolute;
-    top: 8px;
-    right: 15px;
+    top: 12px;
+    right: 15px; /* Position LV text top-right */
     font-weight: bold;
-    font-size: 1em;
-    color: #f7e096; /* Goldish for LV */
+    font-size: 1.1em;
+    color: #f0e6c4;
 }
 
 #pass-level {
@@ -185,15 +172,13 @@ body {
 .achievement-item {
     background-image: url('assets/achievement_item_bg_default.png');
     background-size: 100% 100%;
-    background-repeat: no-repeat;
     display: flex;
     align-items: center;
-    padding: 0 15px; /* Adjust internal padding */
-    margin-bottom: 8px;
-    height: 65px; /* Fixed height to match asset */
+    padding: 0 20px 0 85px; /* Left padding makes space for the badge */
+    margin-bottom: 10px;
+    height: 65px;
     position: relative;
     box-sizing: border-box;
-    font-size: 0.9em; /* Smaller font for achievement name */
 }
 
 .achievement-item.completed {
@@ -215,8 +200,16 @@ body {
     flex-shrink: 0;
 }
 
-.achievement-item input[type="checkbox"]:checked {
-    background-image: url('assets/checkbox_checked.png'); /* Your checkbox assets */
+.achievement-item input[type="checkbox"] {
+    appearance: none;
+    position: absolute;
+    left: 15px; /* Position directly over the badge */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px; /* Cover the badge area */
+    height: 60px;
+    cursor: pointer;
+    z-index: 3; /* Make it the top-most clickable element */
 }
 
 .achievement-details {
@@ -269,35 +262,37 @@ body {
 }
 
 .achievement-points {
-    background-image: url('assets/earned_badge.png'); /* Your badge asset */
+    background-image: url('assets/earned_badge.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    width: 60px; /* Size of the badge */
+    width: 60px;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: #333; /* Darker text for points on badge */
+    color: #3a2e2e;
     font-size: 1.1em;
-    flex-shrink: 0;
-    position: relative; /* For overlaying text */
-    margin-left: 10px; /* Space from achievement details */
+    /* --- New Positioning --- */
+    position: absolute;
+    left: 15px; /* Position on the far left */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .completed-stamp {
     position: absolute;
-    right: 70px; /* Position it left of the points badge */
+    left: 50%; /* Center horizontally */
     top: 50%;
-    transform: translateY(-50%);
-    width: 100px; /* Size of the stamp */
+    transform: translate(-50%, -50%); /* Fine-tune centering */
+    width: 100px;
     height: 50px;
-    background-image: url('assets/completed_stamp.png'); /* Your stamp asset */
+    background-image: url('assets/completed_stamp.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    z-index: 2; /* Ensure it's above other elements */
+    z-index: 2; /* Place it above the text but below the checkbox */
 }
 
 .reset-button {
