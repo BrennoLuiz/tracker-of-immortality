@@ -185,12 +185,73 @@ function renderAchievements(categoryName) {
 
     if (!categoryData) return;
 
-    // This is the new sorting logic, placed right after finding the category data
+    // FIX: This sorts the array before rendering. Completed items go to the bottom.
     const sortedAchievements = [...categoryData.achievements].sort((a, b) => {
         const aCompleted = completedAchievements[a.id]?.isCompleted || false;
         const bCompleted = completedAchievements[b.id]?.isCompleted || false;
-        return aCompleted - bCompleted; // This pushes completed items to the end
+        return aCompleted - bCompleted;
     });
+
+    sortedAchievements.forEach(ach => {
+        // ... (the rest of the function is the same as the previous prompt) ...
+        const achProgress = completedAchievements[ach.id] || { isCompleted: false, currentProgress: ach.current };
+        const isCompleted = achProgress.isCompleted;
+        const currentProgress = achProgress.currentProgress;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'achievement-item';
+        if (isCompleted) {
+            itemDiv.classList.add('completed');
+        }
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = ach.id;
+        checkbox.checked = isCompleted;
+        
+        const detailsDiv = document.createElement('div');
+        detailsDiv.className = 'achievement-details';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'achievement-name';
+        nameSpan.textContent = ach.name;
+        detailsDiv.appendChild(nameSpan);
+
+        if (ach.target > 1) {
+            const progressBarWrapper = document.createElement('div');
+            progressBarWrapper.className = 'achievement-progress-bar-wrapper';
+
+            const progressBarFill = document.createElement('div');
+            progressBarFill.className = 'achievement-progress-bar-fill';
+            const progressPercentage = Math.min(100, (currentProgress / ach.target) * 100);
+            progressBarFill.style.width = `${progressPercentage}%`;
+            
+            const progressText = document.createElement('span');
+            progressText.className = 'achievement-progress-text';
+            progressText.textContent = `${currentProgress}/${ach.target}`;
+
+            progressBarWrapper.appendChild(progressBarFill);
+            progressBarWrapper.appendChild(progressText);
+            detailsDiv.appendChild(progressBarWrapper);
+        }
+        
+        itemDiv.appendChild(checkbox);
+        itemDiv.appendChild(detailsDiv);
+
+        if (isCompleted) {
+            const stamp = document.createElement('div');
+            stamp.className = 'completed-stamp';
+            itemDiv.appendChild(stamp);
+        }
+        
+        const pointsSpan = document.createElement('span');
+        pointsSpan.className = 'achievement-points';
+        pointsSpan.textContent = ach.points;
+        itemDiv.appendChild(pointsSpan);
+
+        achievementListContainer.appendChild(itemDiv);
+    });
+}
 
     function calculateAndDisplaySummary() {
     let currentPoints = 0;
