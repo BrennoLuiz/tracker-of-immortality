@@ -26,7 +26,7 @@ body {
     background-image: url('assets/large_card_bg.jpg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    padding: 35px 45px; /* Adjusted padding to fit inside the border */
+    padding: 35px 45px;
     box-sizing: border-box;
     width: 100%;
     display: flex;
@@ -70,7 +70,7 @@ body {
     color: rgba(255, 255, 255, 0.8);
     font-family: inherit;
     font-size: 1.2em;
-    font-weight: bold; /* <-- FIX: Added bold font weight */
+    font-weight: bold; /* <-- BOLD FONT */
     cursor: pointer;
     transition: all 0.2s ease;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
@@ -117,19 +117,14 @@ body {
 }
 
 .summary-card {
-    background-image: url('assets/small_card_bg.jpg'); /* The smaller dark card for progress */
+    background-image: url('assets/small_card_bg.png');
     background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
     padding: 15px;
-    width: 200px; /* Adjusted width for summary card */
+    width: 250px;
     flex-shrink: 0;
     position: relative;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 120px; /* Fixed height to match reference */
-    padding-top: 30px; /* Room for "Progress" text */
 }
 
 .summary-card h2 {
@@ -183,7 +178,8 @@ body {
 .achievement-list-container {
     overflow-y: auto;
     flex-grow: 1;
-    padding-right: 10px; /* For scrollbar spacing */
+    height: 550px;
+    padding-right: 10px;
 }
 
 .achievement-item {
