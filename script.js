@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { id: 'loadout_5_sinking', name: 'Clear Mirror Dungeon at Floor 5 or higher with 5 or more Sinking Keyword Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 10, current: 0, target: 5 },
                 { id: 'loadout_5_poise', name: 'Clear Mirror Dungeon at Floor 5 or higher with 5 or more Poise Keyword Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 10, current: 0, target: 5 },
                 { id: 'loadout_5_charge', name: 'Clear Mirror Dungeon at Floor 5 or higher with 5 or more Charge Keyword Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 10, current: 0, target: 5 },
-                { id: 'loadout_3t_2yuro', name: 'Clear Mirror Dungeon at Floor 5 or higher with 3+ T Corp. and 2+ Yurodiviye Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 30, current: 0, target: 5 }, // Combined target for 3+2
+                { id: 'loadout_3t_2yuro', name: 'Clear Mirror Dungeon at Floor 5 or higher with 3+ T Corp. and 2+ Yurodiviye Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 30, current: 0, target: 5 },
                 { id: 'loadout_4r', name: 'Clear Mirror Dungeon at Floor 5 or higher with 4 or more R Corp. Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 30, current: 0, target: 4 },
                 { id: 'loadout_4zwei', name: 'Clear Mirror Dungeon at Floor 5 or higher with 4 or more Zwei Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 50, current: 0, target: 4 },
                 { id: 'loadout_3cinq', name: 'Clear Mirror Dungeon at Floor 5 or higher with 3 or more Cinq Identities in your Loadout at the time of completion (Incompletable by Rental Teams)', points: 30, current: 0, target: 3 },
@@ -142,31 +142,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const achievementListContainer = document.getElementById('achievement-list');
     const totalPointsEl = document.getElementById('total-points');
     const passLevelEl = document.getElementById('pass-level');
-    const progressBarEl = document.getElementById('progress-bar'); // Main progress bar
+    const progressBarEl = document.getElementById('progress-bar');
     const resetButton = document.getElementById('reset-button');
     const tabButtons = document.querySelectorAll('.sidebar .tab-button');
     const categoryTitleEl = document.getElementById('category-title');
     const PASS_LEVEL_POINTS = 100;
     
     let completedAchievements = {};
-    let currentCategory = "Collection"; // Default category
+    let currentCategory = "Collection";
 
-    // Calculate total possible points once
     const totalPossiblePoints = achievementsData.reduce((total, category) => {
         return total + category.achievements.reduce((catTotal, ach) => catTotal + ach.points, 0);
     }, 0);
 
     function loadProgress() {
-        const savedProgress = localStorage.getItem('md6_achievements_v3'); // Updated key for new data structure
+        const savedProgress = localStorage.getItem('md6_achievements_v3');
         if (savedProgress) {
             completedAchievements = JSON.parse(savedProgress);
         } else {
-            // Initialize progress for all achievements if no save found
             achievementsData.forEach(cat => {
                 cat.achievements.forEach(ach => {
                     completedAchievements[ach.id] = {
                         isCompleted: false,
-                        currentProgress: ach.current // Store initial current progress
+                        currentProgress: ach.current
                     };
                 });
             });
@@ -177,190 +175,135 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('md6_achievements_v3', JSON.stringify(completedAchievements));
     }
 
-function renderAchievements(categoryName) {
-    achievementListContainer.innerHTML = ''; // Clear previous list
-    const categoryData = achievementsData.find(cat => cat.category === categoryName);
-    
-    categoryTitleEl.textContent = categoryName;
-
-    if (!categoryData) return;
-
-    // FIX: This sorts the array before rendering. Completed items go to the bottom.
-    const sortedAchievements = [...categoryData.achievements].sort((a, b) => {
-        const aCompleted = completedAchievements[a.id]?.isCompleted || false;
-        const bCompleted = completedAchievements[b.id]?.isCompleted || false;
-        return aCompleted - bCompleted;
-    });
-
-    sortedAchievements.forEach(ach => {
-        // ... (the rest of the function is the same as the previous prompt) ...
-        const achProgress = completedAchievements[ach.id] || { isCompleted: false, currentProgress: ach.current };
-        const isCompleted = achProgress.isCompleted;
-        const currentProgress = achProgress.currentProgress;
-
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'achievement-item';
-        if (isCompleted) {
-            itemDiv.classList.add('completed');
-        }
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = ach.id;
-        checkbox.checked = isCompleted;
+    function renderAchievements(categoryName) {
+        achievementListContainer.innerHTML = '';
+        const categoryData = achievementsData.find(cat => cat.category === categoryName);
         
-        const detailsDiv = document.createElement('div');
-        detailsDiv.className = 'achievement-details';
+        categoryTitleEl.textContent = categoryName;
 
-        const nameSpan = document.createElement('span');
-        nameSpan.className = 'achievement-name';
-        nameSpan.textContent = ach.name;
-        detailsDiv.appendChild(nameSpan);
+        if (!categoryData) return;
 
-        if (ach.target > 1) {
-            const progressBarWrapper = document.createElement('div');
-            progressBarWrapper.className = 'achievement-progress-bar-wrapper';
+        const sortedAchievements = [...categoryData.achievements].sort((a, b) => {
+            const aCompleted = completedAchievements[a.id]?.isCompleted || false;
+            const bCompleted = completedAchievements[b.id]?.isCompleted || false;
+            return aCompleted - bCompleted;
+        });
 
-            const progressBarFill = document.createElement('div');
-            progressBarFill.className = 'achievement-progress-bar-fill';
-            const progressPercentage = Math.min(100, (currentProgress / ach.target) * 100);
-            progressBarFill.style.width = `${progressPercentage}%`;
+        sortedAchievements.forEach(ach => {
+            const achProgress = completedAchievements[ach.id] || { isCompleted: false, currentProgress: ach.current };
+            const isCompleted = achProgress.isCompleted;
+            const currentProgress = achProgress.currentProgress;
+
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'achievement-item';
+            if (isCompleted) {
+                itemDiv.classList.add('completed');
+            }
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = ach.id;
+            checkbox.checked = isCompleted;
             
-            const progressText = document.createElement('span');
-            progressText.className = 'achievement-progress-text';
-            progressText.textContent = `${currentProgress}/${ach.target}`;
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'achievement-details';
 
-            progressBarWrapper.appendChild(progressBarFill);
-            progressBarWrapper.appendChild(progressText);
-            detailsDiv.appendChild(progressBarWrapper);
-        }
-        
-        itemDiv.appendChild(checkbox);
-        itemDiv.appendChild(detailsDiv);
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'achievement-name';
+            nameSpan.textContent = ach.name;
+            detailsDiv.appendChild(nameSpan);
 
-        if (isCompleted) {
-            const stamp = document.createElement('div');
-            stamp.className = 'completed-stamp';
-            itemDiv.appendChild(stamp);
-        }
-        
-        const pointsSpan = document.createElement('span');
-        pointsSpan.className = 'achievement-points';
-        pointsSpan.textContent = ach.points;
-        itemDiv.appendChild(pointsSpan);
+            if (ach.target > 1) {
+                const progressBarWrapper = document.createElement('div');
+                progressBarWrapper.className = 'achievement-progress-bar-wrapper';
 
-        achievementListContainer.appendChild(itemDiv);
-    });
-}
+                const progressBarFill = document.createElement('div');
+                progressBarFill.className = 'achievement-progress-bar-fill';
+                const progressPercentage = Math.min(100, (currentProgress / ach.target) * 100);
+                progressBarFill.style.width = `${progressPercentage}%`;
+                
+                const progressText = document.createElement('span');
+                progressText.className = 'achievement-progress-text';
+                progressText.textContent = `${currentProgress}/${ach.target}`;
+
+                progressBarWrapper.appendChild(progressBarFill);
+                progressBarWrapper.appendChild(progressText);
+                detailsDiv.appendChild(progressBarWrapper);
+            }
+            
+            itemDiv.appendChild(checkbox);
+            itemDiv.appendChild(detailsDiv);
+
+            if (isCompleted) {
+                const stamp = document.createElement('div');
+                stamp.className = 'completed-stamp';
+                itemDiv.appendChild(stamp);
+            }
+            
+            const pointsSpan = document.createElement('span');
+            pointsSpan.className = 'achievement-points';
+            pointsSpan.textContent = ach.points;
+            itemDiv.appendChild(pointsSpan);
+
+            achievementListContainer.appendChild(itemDiv);
+        });
+    }
 
     function calculateAndDisplaySummary() {
-    let currentPoints = 0;
-    Object.keys(completedAchievements).forEach(id => {
-        if(completedAchievements[id].isCompleted) {
-            for (const category of achievementsData) {
-                const ach = category.achievements.find(a => a.id === id);
-                if (ach) {
-                    currentPoints += ach.points;
-                    break;
+        let currentPoints = 0;
+        Object.keys(completedAchievements).forEach(id => {
+            if(completedAchievements[id].isCompleted) {
+                for (const category of achievementsData) {
+                    const ach = category.achievements.find(a => a.id === id);
+                    if (ach) {
+                        currentPoints += ach.points;
+                        break;
+                    }
                 }
             }
-        }
-    });
+        });
     
-    const passLevel = Math.floor(currentPoints / PASS_LEVEL_POINTS);
-    const progressToNext = currentPoints % PASS_LEVEL_POINTS;
+        const passLevel = Math.floor(currentPoints / PASS_LEVEL_POINTS);
+        const progressToNext = currentPoints % PASS_LEVEL_POINTS;
     
-    totalPointsEl.textContent = `${currentPoints} / ${totalPossiblePoints}`;
-    passLevelEl.textContent = passLevel;
-    progressBarEl.style.width = `${progressToNext}%`;
-        
-    });
-}
-    // The rest of the function now uses the new 'sortedAchievements' array
-    sortedAchievements.forEach(ach => {
-        const achProgress = completedAchievements[ach.id] || { isCompleted: false, currentProgress: ach.current };
-        const isCompleted = achProgress.isCompleted;
-        const currentProgress = achProgress.currentProgress;
-
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'achievement-item';
-        if (isCompleted) {
-            itemDiv.classList.add('completed');
-        }
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.id = ach.id;
-        checkbox.checked = isCompleted;
-        
-        const detailsDiv = document.createElement('div');
-        detailsDiv.className = 'achievement-details';
-
-        const nameSpan = document.createElement('span');
-        nameSpan.className = 'achievement-name';
-        nameSpan.textContent = ach.name;
-        detailsDiv.appendChild(nameSpan);
-
-        if (ach.target > 1) {
-            const progressBarWrapper = document.createElement('div');
-            progressBarWrapper.className = 'achievement-progress-bar-wrapper';
-
-            const progressBarFill = document.createElement('div');
-            progressBarFill.className = 'achievement-progress-bar-fill';
-            const progressPercentage = Math.min(100, (currentProgress / ach.target) * 100);
-            progressBarFill.style.width = `${progressPercentage}%`;
+        totalPointsEl.textContent = `${currentPoints} / ${totalPossiblePoints}`;
+        passLevelEl.textContent = passLevel;
+        progressBarEl.style.width = `${progressToNext}%`;
+    }
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            currentCategory = button.dataset.category;
             
-            const progressText = document.createElement('span');
-            progressText.className = 'achievement-progress-text';
-            progressText.textContent = `${currentProgress}/${ach.target}`;
-
-            progressBarWrapper.appendChild(progressBarFill);
-            progressBarWrapper.appendChild(progressText);
-            detailsDiv.appendChild(progressBarWrapper);
-        }
-        
-        itemDiv.appendChild(checkbox);
-        itemDiv.appendChild(detailsDiv);
-
-        if (isCompleted) {
-            const stamp = document.createElement('div');
-            stamp.className = 'completed-stamp';
-            itemDiv.appendChild(stamp);
-        }
-        
-        const pointsSpan = document.createElement('span');
-        pointsSpan.className = 'achievement-points';
-        pointsSpan.textContent = ach.points;
-        itemDiv.appendChild(pointsSpan);
-
-        achievementListContainer.appendChild(itemDiv);
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            renderAchievements(currentCategory);
+        });
     });
-}
 
-    // Example of how to manually update an achievement's progress (for testing/future input)
-    // You would call this when a user performs an action that updates progress
-    // function updateAchievementProgress(id, newProgress) {
-    //     if (completedAchievements[id]) {
-    //         const achDef = achievementsData.flatMap(cat => cat.achievements).find(a => a.id === id);
-    //         if (achDef) {
-    //             completedAchievements[id].currentProgress = Math.min(newProgress, achDef.target);
-    //             if (completedAchievements[id].currentProgress === achDef.target) {
-    //                 completedAchievements[id].isCompleted = true;
-    //             } else {
-    //                 completedAchievements[id].isCompleted = false;
-    //             }
-    //             saveProgress();
-    //             updateSummary();
-    //             renderAchievements(currentCategory);
-    //         }
-    //     }
-    // }
+    achievementListContainer.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+            const achId = e.target.id;
+            if (!completedAchievements[achId]) {
+                completedAchievements[achId] = { isCompleted: false, currentProgress: 0 };
+            }
+            completedAchievements[achId].isCompleted = e.target.checked;
+            
+            const achDef = achievementsData.flatMap(cat => cat.achievements).find(a => a.id === achId);
+            if (achDef) {
+                completedAchievements[achId].currentProgress = e.target.checked ? achDef.target : 0;
+            }
 
+            saveProgress();
+            calculateAndDisplaySummary();
+            renderAchievements(currentCategory); 
+        }
+    });
 
     resetButton.addEventListener('click', () => {
         if (confirm('Are you sure you want to reset all your progress? This cannot be undone.')) {
-            completedAchievements = {}; // Clear all progress
-            // Re-initialize with default progress
+            completedAchievements = {};
             achievementsData.forEach(cat => {
                 cat.achievements.forEach(ach => {
                     completedAchievements[ach.id] = {
@@ -378,5 +321,5 @@ function renderAchievements(categoryName) {
     // Initial page load
     loadProgress();
     calculateAndDisplaySummary();
-    renderAchievements(currentCategory); // Render the default category
+    renderAchievements(currentCategory);
 });
