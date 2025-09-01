@@ -273,6 +273,8 @@ function renderAchievements(categoryName) {
     totalPointsEl.textContent = `${currentPoints} / ${totalPossiblePoints}`;
     passLevelEl.textContent = passLevel;
     progressBarEl.style.width = `${progressToNext}%`;
+        
+    });
 }
     // The rest of the function now uses the new 'sortedAchievements' array
     sortedAchievements.forEach(ach => {
